@@ -1,9 +1,14 @@
-import React from 'react'
+import React from 'react';
+import { NewNoteForm } from './NewNoteForm';
+import { OldNotes } from './OldNotes';
+import "./Home.css"
 
 export const Home = () => {
   return (
-    <div>
-      <h1>Add Note</h1>
+    <div id="homeDiv">
+      <NewNoteForm />
+      <br />
+      <OldNotes />
     </div>
   )
 }
