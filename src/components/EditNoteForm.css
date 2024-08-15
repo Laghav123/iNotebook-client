@@ -1,0 +1,42 @@
+/* Overlay to disable interaction with the background */
+.edit-note-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 9998; /* Just below the form */
+  }
+  
+  /* Container for the form */
+  .edit-note-form-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    width: 400px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+  
+  /* The form itself */
+  .edit-note-form {
+    width: 100%;
+  }
+  
+  /* Submit button styling */
+  .edit-note-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Icon inside the button */
+  .edit-note-icon {
+    margin-right: 8px;
+  }
+  

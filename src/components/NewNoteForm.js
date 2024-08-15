@@ -5,6 +5,8 @@ import './NewNoteForm.css'
 import { FaPlus } from 'react-icons/fa';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
+// import {addNote} from '../utils/addNote'
+import { useNotes } from '../context/notes/NotesContext';
 
 export const NewNoteForm = () => {
     
@@ -13,10 +15,11 @@ export const NewNoteForm = () => {
     const [title, setTitle] = useState("");
     const [tag, setTag] = useState("");
     const [desc, setDesc] = useState("");
+    const {allNotes, setAllNotes, tagOptions} = useNotes();
 
     const addNoteBtnHandler = async () => {
         try {
-            await axios.post("http://localhost:5000/api/notes/addNote", 
+            const res = await axios.post("http://localhost:5000/api/notes/addNote", 
                 {
                     title : title,
                     description : desc,
@@ -26,6 +29,12 @@ export const NewNoteForm = () => {
             );
             console.log("NOTE ADDED SUCCESSFULLY");
             
+            const newAllNotes = [...allNotes, res.data];
+            setAllNotes(newAllNotes);
+            setTag("General");
+            setTitle("");
+            setDesc("");
+            console.log("newAllNotes : ", newAllNotes)
         } catch (error) {
             console.log("error while adding note : " , error);
         }
@@ -51,20 +60,28 @@ export const NewNoteForm = () => {
                 <Form.Control
                     placeholder="Note Title"
                     onChange={titleInputHandler}
+                    value={title}
                 />
             </InputGroup>
 
             <InputGroup className="mb-3">
-                <Form.Control as="textarea" placeholder='Type your note content here' onChange={ descriptionInputHandler }/>
+                <Form.Control 
+                    as="textarea" 
+                    placeholder='Type your note content here' 
+                    onChange={ descriptionInputHandler }
+                    value={desc}
+                />
+                    
             </InputGroup>
 
             <InputGroup className="mb-3">
                 <InputGroup.Text>Note Tag</InputGroup.Text>
-                <Form.Select  onChange={tagSelectHandler}>
-                    <option value="0">General</option>
-                    <option value="1">Diary</option>
-                    <option value="2">Todo</option>
-                    <option value="3">Random Thoughts</option>
+                <Form.Select  onChange={tagSelectHandler} value={tag}>
+                    {tagOptions.map((t) => (
+                        <option value={t}>
+                        {t}
+                        </option>
+                    ))}
                 </Form.Select>
             </InputGroup>
 
